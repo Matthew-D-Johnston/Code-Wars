@@ -82,3 +82,35 @@ This works, but it times out in Code Wars tests.
 * Extract the lowest number from the array using `min`.
 * If the other two numbers are equal, then split the lowest number in half and subtract each half from the other two numbers while equating the lowest number with the total day count. Whatever is left for the other two chip piles, add the day count by one of those numbers to get the final day count.
 * If the other two numbers are not equal, continually subtract one from each of the highest and lowest number until the highest number is reduced to the same size as the second highest number (the two are now equal). However much was subtracted, add that to the day count. Then, if there is still anything left of the smallest pile, divide it in half and subtract each half from the other two numbers. 
+
+---
+
+**New Code:**
+
+```ruby
+def solve(chips)
+  small_pile = chips.min
+  big_piles = chips.sort[1..2]
+  days = 0
+
+  if big_piles.first == big_piles.last
+    small_pile.even? ? days += small_pile : days += (small_pile - 1)
+    days += big_piles.first - (small_pile / 2)
+  else
+    big_piles_difference = big_piles.last - big_piles.first
+
+    if big_piles_difference <= small_pile
+      days += big_piles_difference
+      small_pile -= big_piles_difference
+      small_pile.even? ? days += small_pile : days += (small_pile - 1)
+      days += big_piles.first - (small_pile / 2)
+    else
+      days += small_pile
+      days += big_piles.first
+    end
+  end
+
+  days
+end
+```
+

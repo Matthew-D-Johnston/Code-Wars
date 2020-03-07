@@ -5,7 +5,7 @@ def pangram?(string)
   booleans = letters.map do |letter|
     string.include?(letter) || string.include?(letter.upcase)
   end
-  
+
   booleans.all?
 end
 
